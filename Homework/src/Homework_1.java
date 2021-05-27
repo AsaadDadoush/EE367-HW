@@ -3,9 +3,9 @@ import java.util.*;
 /**
  * @(#)Homework.java
  * @author Asaad.Da
- *
+ * @version 1.00 2021/27/5
+ * {@link https://github.com/AsaadDadoush/EE367-HW/tree/master/Homework}
  */
-
 
 public class Homework_1 {
 	
@@ -13,20 +13,33 @@ public class Homework_1 {
 	public static void main(String [] args) {
 		
 		Homework_1 obj = new Homework_1();
-		
 		System.out.println(obj.isMultiple(100, 1000));
 		System.out.println(obj.sumLess(5));
 		System.out.println(obj.oddSum(10));
 		
+		/**
+		 * This is to test the class flower if is everything goes okey
+		 */
+		Flower flowobj = new Flower("Sharyn",5,25.55f);
+		
+		System.out.printf("\n\nName: %s\nnumber of petals: %d\nprice: %f",
+				flowobj.getName(),flowobj.getNumberOfpetals(),flowobj.getPrice());
+		
+		flowobj.setName("Sharyn_V2");
+		flowobj.setNumberOfPetals(7);
+		flowobj.setPrice(27.77f);
+		
+		System.out.printf("\n\nName: %s\nnumber of petals: %d\nprice: %f",
+				flowobj.getName(),flowobj.getNumberOfpetals(),flowobj.getPrice());
 		
 		
 	}
 	
-	
 	/**
 	 * R-1.3
 	 * compute 2 numbers to see if n is multiple of m or not
-	 * @param n, m
+	 * @param n
+	 * @param m
 	 * these two numbers that needs to compare them
 	 * @return
 	 * return true if n is multiple of m
@@ -76,8 +89,6 @@ public class Homework_1 {
 		}
 		return sum;
 	}
-	
-	
 	
 	
 	
