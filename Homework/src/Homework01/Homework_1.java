@@ -1,11 +1,13 @@
 package Homework01;
 import java.util.*;
+import java.util.Random;
 
 /**
  * @(#)Homework.java
  * @author Asaad.Da
  * @version 1.00 2021/27/5
  * {@link https://github.com/AsaadDadoush/EE367-HW/tree/master/Homework}
+ * Use this link for the Source code
  */
 
 public class Homework_1 {
@@ -32,6 +34,53 @@ public class Homework_1 {
 		
 		System.out.printf("\n\nName: %s\nnumber of petals: %d\nprice: %f",
 				flowobj.getName(),flowobj.getNumberOfpetals(),flowobj.getPrice());
+		
+		
+		/**
+		 * C-1.23
+		 * I used java Random class to solve this problem
+		 * First create array a , b
+		 * Second create array c 
+		 * Store the product of arrays a , b in c
+		 * print the results 
+		 * 
+		 */
+		Random r = new Random();
+		int n = 5;
+		int[] a =  new int[n];
+		int[] b =  new int[n];
+		int[] c =  new int[n];
+		
+		for(int i= 0; i < a.length; i++ ) {
+			a[i] = r.nextInt(10) + 1;
+			b[i] = r.nextInt(10) + 1;
+			c[i] =  a[i] * b[i];
+			System.out.printf("\n%d * %d = %d",a[i],b[i],c[i]);
+			
+		}
+		
+		/**
+		 * R-2.6
+		 * this is short code fragment be usuing Fibonacci progression that starts with
+		 * 2 and 2 to  find the 8th value
+		 */
+		int num1 = 2;
+		int num2 = 2;
+		int sum;
+		int total = 8;
+		
+		System.out.print("\n\n\n"+num1);
+		
+		for(int i= 1; i < total;i++) {
+		sum = num1+num2;
+		System.out.print(", " + num2);
+		num1 = num2;
+		num2 = sum;
+		}
+		
+		AbsProgression abs = new AbsProgression();
+		System.out.println("\n\n\n\n");
+		abs.advanceuntil(100);
 		
 		
 	}
