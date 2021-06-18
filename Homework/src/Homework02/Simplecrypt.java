@@ -41,13 +41,13 @@ public class Simplecrypt {
 	     */
 	    try{
 	    	//output
-	    	File output = new File("C:\\Users\\asaad\\Desktop\\Homework 02\\clear.txt");
+	    	File output = new File("C:\\Users\\asaad\\Desktop\\test\\test.txt");
 			BufferedWriter wr = new BufferedWriter(
 					new FileWriter(output));  //The file that we want to write an (output) on it
 			
 			
 	    	//input
-			File inputt = new File("C:\\Users\\asaad\\Desktop\\Homework 02\\crypt.crp");
+			File inputt = new File("C:\\Users\\asaad\\Desktop\\test\\test.crp");
 			BufferedReader br = null ;
 					
 			
