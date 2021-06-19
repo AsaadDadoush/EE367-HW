@@ -4,8 +4,8 @@ package Homework04;
  * @(#)AirportSimulator.java 
  * 
  * 
- * @author Dr. Abdulghani M. Al-Qasimi 
- * @version 1.00 2009/11/24 
+ * @author Asaad.Da
+ * @version 1.00 2021/6/20 
  * 
  * This class simulates a small airport with a single runway. 
  * The policy of the airport authority is to give priority to 
