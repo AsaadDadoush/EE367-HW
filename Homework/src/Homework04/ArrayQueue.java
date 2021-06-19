@@ -13,34 +13,36 @@ package Homework04;
  */ 
 
 import java.util.ArrayDeque; 
+
+
 public class ArrayQueue<E> extends ArrayDeque<E> { 
 	
  private int limit; // Impose a limit on the queue size
  
  
  public ArrayQueue() { // The default constructor
- super(); 
- limit = 16; // Default size limit is 16
+	 super(); 
+	 limit = 16; // Default size limit is 16
  } 
  
  public ArrayQueue(int numElements) { // Another constructor 
- super(numElements); 
- limit = numElements; // The queue has the given size limit
+	 super(numElements); 
+	 limit = numElements; // The queue has the given size limit
  } 
  
  
  public boolean enqueue(E e) { // Adaptor method for adding one element
- return offer(e); 
+	 return offer(e); 
  } 
  
  
  public E serve() { // Adaptor method for removing one element
- return poll(); 
+	 return poll(); 
  } 
  
  
  public boolean isFull() { // A new method to test if the queue is full
- return (size() == limit); 
+	 return (size() == limit); 
  } 
  
  
