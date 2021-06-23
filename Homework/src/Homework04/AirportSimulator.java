@@ -31,84 +31,123 @@ public class AirportSimulator {
  
  
  // Creating an input stream scanner 
- protected static Scanner in = new Scanner(System.in); 
- private static int maxQueue = 5; // Queue maximum allowable size, default 5
+ protected static Scanner input = new Scanner(System.in);
+ private static  int runways;  // The number of the Runaways
+ private static int maxQueue = 10; // Queue maximum allowable size, default 10
  private static int currentTime = 1; // Current time; unit = time to takeoff or land
- private static int endTime = 30; // Total number of time units to run 
+ private static int endTime = 10000; // Total number of time units to run 
  private static int idleTime; // Number of units when the runway is idle
  private static int numPlanes; // Number of planes processed
  private static int numLanded; // Number of planes that landed
  private static int numTookoff; // Number of planes that took off 
  private static int numRefused; // Number of planes denied use of the airport
- private static int landWait; // Total waiting time for planes that landed
- private static int takeoffWait; // Total waiting time for planes that took off
+ private static int landWait; // Total waiting time for planes that landed/single runway
+ private static int landWaitTimeAvg; // Total waiting time for planes that landed/ all runway
+ private static int takeoffWait; // Total waiting time for planes that took off/single runway
+ private static int takeoffTimeAvg;//Total waiting time for planes that took off/ all runway
  private static double expectArrive; // Expected no. planes arriving in a time unit
  private static double expectDepart; // Expected no. planes newly ready to depart
- 
+ private static int counter;            // Control for running the simulation multiple times
+ private static int printway = 1;           //To print each run way number 
+ private static double avgArri;        // The average length of the arrivals queue
+ private static double avgDepar;        // The average length of the departures queue
  
  
  
  // The main simulation method 
  public static void main(String[] args) { 
 	 Plane p; // A temporary plane reference
-	 boolean again = true; // Control for running the simulation again
-	 do { // This loop for repeating the simulation
-		 start(); // Initialize static fields & data structures
-		 System.out.println(); 
-		 System.out.println();  // The main simulation loop; Each iteration represents one time unit 
-		 // Every thing that can happen simultaneously in a single unit of time 
-		 // is done within this loop's body. 
-		 for (currentTime=1; currentTime <= endTime; currentTime++) { 
-			 numPlanes += generateArrive(currentTime); // Create arriving planes
-			 numPlanes += generateDepart(currentTime); // Create departing planes
-			 // Execute the Airport authority policy: Land one plane; if none, fly one plane 
-			 if (!landing.isEmpty()) { // Check the landing queue first
-				 p = landing.serve(); 
-				 landWait = landWait + p.land(currentTime); 
-				 numLanded++; 
-			 } 
-			 else if (!takeoff.isEmpty()) { // Check the departing queue
-				 p = takeoff.serve(); 
-				 takeoffWait = takeoffWait + p.fly(currentTime); 
-				 numTookoff++; 
-			 } 
-			 else // If none, report idle runway
-				 runwayIdle(currentTime); 
-		 } // End of the main loop
-		 // Print all the statistical results of the simulation 
-		 conclude(); 
-		 // Reset all the static fields and data structures to their default values 
-		 reset(); 
-		 // Ask if another run is required 
-		 System.out.print("Do you want to run another simulation (true/false)? "); 
-		 again = (in.nextBoolean()); 
-	 } while (again); 
-	 return; 
+	 counter = 0;
+	 System.out.println("This program simulates an airport with one up to five runways."); 
+	 System.out.println("One plane can land or depart in each unit of time."); 
+	 System.out.println(); 
+	 System.out.print("What is the number of Runways to use in the Airport Simulation? ");
+	 runways = input.nextInt();
+	 System.out.println();
+	 if(runways > 0 && runways <= 5) {
+		 
+		 do { // This loop for repeating the simulation
+			 start(); // Initialize static fields & data structures
+			 System.out.println(); 
+			 System.out.println();  // The main simulation loop; Each iteration represents one time unit 
+			 // Every thing that can happen simultaneously in a single unit of time 
+			 // is done within this loop's body. 
+			 for (currentTime=1; currentTime <= endTime; currentTime++) { 
+				 numPlanes += generateArrive(currentTime); // Create arriving planes
+				 numPlanes += generateDepart(currentTime); // Create departing planes
+				 // Execute the Airport authority policy: Land one plane; if none, fly one plane 
+				 if (!landing.isEmpty()) { // Check the landing queue first
+					 p = landing.serve(); 
+					 landWait = landWait + p.land(currentTime); 
+					 numLanded++;
+				 } 
+				 else if (!takeoff.isEmpty()) { // Check the departing queue
+					 p = takeoff.serve(); 
+					 takeoffWait = takeoffWait + p.fly(currentTime); 
+					 numTookoff++; 
+				 } 
+				 else // If none, report idle runway
+					 runwayIdle(currentTime); 
+			 } // End of the main loop
+			 // Print all the statistical results of the simulation 
+			 avgArri += numLanded;
+			 avgDepar += numTookoff;
+			 takeoffTimeAvg+= takeoffWait;
+			 landWaitTimeAvg+= landWait;
+			 conclude(); 
+			 // Reset all the static fields and data structures to their default values 
+			 reset(); 
+			 // Ask if another run is required 
+//			 System.out.print("Do you want to run another simulation (true/false)? "); 
+//			 again = (input.nextBoolean()); 
+			 counter++;
+			 printway++; // to print the runway number
+		 } while (counter < runways ); 
+		 		System.out.println("====================================================");
+		 		System.out.println();
+		 		System.out.println("The Airport Simulation closing ");
+		 		System.out.println();
+		 		System.out.println("Number of the runways that used: " + counter + " ");
+		 		System.out.println();
+		 		System.out.println("Average length of the arrivals queue: " + (avgArri/counter));
+		 		System.out.println("Average length of the departures queue: " + (avgDepar/counter));
+		 		System.out.println();
+	 	 		System.out.print("Average waiting time to land: "); 
+	 			System.out.printf("%6.2f", (landWaitTimeAvg/(double)avgArri)); 
+	 			System.out.println(); 
+	 			System.out.print("Average waiting time to take off: "); 
+	 			System.out.printf("%6.2f", (takeoffTimeAvg/(double)avgDepar)); 
+	 			System.out.println(); 
+	 			System.out.println(); 
+	 			System.out.println(); 
+
+		 return; 
+	 }
+	 else
+		 System.out.println("Error the number allowed between 1 and 5 only ........");
+	 
  	} 
  // Prompts the user for the required input values, and initializes all the program 
  // static fields & data structures. It also checks for the correctness of the input data. 
  // 
  public static void start() { 
 	 boolean ok = true; 
-	 System.out.println("This program simulates an airport with only one runway."); 
-	 System.out.println("One plane can land or depart in each unit of time."); 
-	 System.out.println(); 
-	 System.out.print("What is the maximum allowed length of the queue? "); 
-	 maxQueue = in.nextInt(); 
+	 System.out.print("What is the maximum allowed length of the queue? ");
+	 maxQueue = input.nextInt(); 
 	 System.out.println(); 
 	 System.out.print("Up to " + maxQueue + " planes can "); 
 	 System.out.println("be waiting to land or take off at any time."); 
 	 System.out.println();  System.out.print("How many units of time will the simulation run? "); 
-	 endTime = in.nextInt(); 
+	 endTime = input.nextInt(); 
 	 System.out.println(); 
 	 do { 
 		 System.out.print("Enter the expected number of arrivals per unit time"); 
 		 System.out.print(" (a real number)? "); 
-		 expectArrive = in.nextDouble(); 
+		 expectArrive = input.nextDouble(); 
 		 System.out.println(); 
 		 System.out.print("Enter the expected number of departures per unit time"); 
 		 System.out.print(" (a real number)? "); 
-		 expectDepart = in.nextDouble(); 
+		 expectDepart = input.nextDouble(); 
 		 System.out.println(); 
 		 if ((expectArrive < 0.0) || (expectDepart < 0.0)) { 
 			 System.out.println("These numbers must be non-negative"); 
@@ -118,7 +157,7 @@ public class AirportSimulator {
 		 else if ((expectArrive + expectDepart) > 1.0) { 
 			 System.out.print("The airport will become saturated. "); 
 			 System.out.print("Want to read new numbers (true/false)? "); 
-			 ok = !(in.nextBoolean()); 
+			 ok = !(input.nextBoolean()); 
 			 System.out.println(); 
 		 } 
 		 else ok = true; 
@@ -143,7 +182,7 @@ public class AirportSimulator {
 		 p = new Plane(currentTime); 
 		 p.setReadyToLand(); 
 		 if (landing.isFull()) {  p.refuseLanding(); 
- 	numRefused++; 
+		 numRefused++; 
 		 } 
 		 else 
 			 landing.enqueue(p); 
@@ -178,8 +217,8 @@ public class AirportSimulator {
  // Reports an idle runway and updates the counter 
  // 
  public static void runwayIdle(int currentTime) { 
-	 System.out.printf("%4d", currentTime); 
-	 System.out.println(": Runway is idle."); 
+//	 System.out.printf("%4d", currentTime); 
+//	 System.out.println(": Runway is idle."); 
 	 idleTime++; 
  	} 
  
@@ -187,11 +226,19 @@ public class AirportSimulator {
  
  	// Writes out all the required statistics and finish the simulation 
  	// 
- 	public static void conclude() { 
+ 	public static void conclude() {
  		System.out.println(); 
+ 		System.out.println();
+ 		System.out.println("Runway number: " +  printway);
+ 		System.out.println();
+ 		System.out.println("Simulation has concluded after " + endTime + " units for the Runway number " + printway);
+ 		System.out.println();
+ 		System.out.println("Runway " + printway + " allowed queue length is " + maxQueue);
  		System.out.println(); 
- 		System.out.println("Simulation has concluded after " + endTime + " units."); 
- 		System.out.println();  System.out.print("Expected number of arrivals was: "); 
+ 		System.out.println("Queue priority for the arrivals planes: " + (expectArrive * 100) + " %" );
+ 		System.out.println("Queue priority for the departures planes: " + (expectDepart * 100) + " %" );
+ 		System.out.println();
+ 		System.out.print("Expected number of arrivals was: "); 
  		System.out.println(poisonArrive.getExpectedNumber()); 
  		System.out.print("Expected number of departures was: "); 
  		System.out.println(poisonDepart.getExpectedNumber()); 
@@ -199,11 +246,11 @@ public class AirportSimulator {
  		System.out.print("Total number of planes processed: "); 
  		System.out.printf("%4d", numPlanes); 
  		System.out.println(); 
- 		System.out.print(" Number of planes landed: "); 
- 		System.out.printf("%4d", numLanded); 
- 		System.out.println(); 
  		System.out.print(" Number of planes tookoff: "); 
  		System.out.printf("%4d", numTookoff); 
+ 		System.out.println(); 
+ 		System.out.print(" Number of planes landed: "); 
+ 		System.out.printf("%4d", numLanded); 
  		System.out.println(); 
  		System.out.print(" Number of planes refused: "); 
  		System.out.printf("%4d", numRefused); 
@@ -236,10 +283,13 @@ public class AirportSimulator {
  			System.out.println(); 
  			System.out.println(); 
  			System.out.println(); 
- 		} 
+ 		}
+ 		
  		
  		
  	}  
+ 	
+ 		
  	
  	
  // Resets all the static fields to their default values and clears the queues 

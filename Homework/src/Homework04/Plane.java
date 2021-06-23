@@ -42,27 +42,27 @@ public class Plane {
 	 } 
 	 
 	 public void setReadyToLand() { // Prints a message; This is an arriving
-		 System.out.print(" Plane "); // plane that is ready for landing
-		 System.out.printf("%4d", id); 
-		 System.out.println(" is ready to land."); 
+//		 System.out.print(" Plane "); // plane that is ready for landing
+//		 System.out.printf("%4d", id); 
+//		 System.out.println(" is ready to land."); 
 	 } 
 	 
 	 public void setReadyToTakeoff() { // Prints a message; This is a departing
-		 System.out.print(" Plane "); // plane that is ready for takeoff
-		 System.out.printf("%4d", id); 
-		 System.out.println(" is ready to take off."); 
+//		 System.out.print(" Plane "); // plane that is ready for takeoff
+//		 System.out.printf("%4d", id); 
+//		 System.out.println(" is ready to take off."); 
 	 } 
 	 
 	 public int land(int currentTime) { // Prints a message; This plane has landed 
 		 int wait; // Calculates and returns the waiting time
 		 // in the queue. 
 		 wait = currentTime - tm; 
-		 System.out.printf("%4d", currentTime); 
-		 System.out.print(": Plane "); 
-		 System.out.printf("%4d", id); 
-		 System.out.print(" has landed; In queue "); 
-		 System.out.printf("%4d", wait); 
-		 System.out.println(" units."); 
+//		 System.out.printf("%4d", currentTime); 
+//		 System.out.print(": Plane "); 
+//		 System.out.printf("%4d", id); 
+//		 System.out.print(" has landed; In queue "); 
+//		 System.out.printf("%4d", wait); 
+//		 System.out.println(" units."); 
 		 return wait; 
 	 } 
 	 
@@ -70,25 +70,25 @@ public class Plane {
 		 int wait; // Calculates and returns the waiting time 
 		 // in the queue. 
 		 wait = currentTime - tm; 
-	 	System.out.printf("%4d", currentTime); 
-	 	System.out.print(": Plane "); 
-	 	System.out.printf("%4d", id); 
-	 	System.out.print(" took off; In queue "); 
-	 	System.out.printf("%4d", wait); 
-	 	System.out.println(" units."); 
+//	 	System.out.printf("%4d", currentTime); 
+//	 	System.out.print(": Plane "); 
+//	 	System.out.printf("%4d", id); 
+//	 	System.out.print(" took off; In queue "); 
+//	 	System.out.printf("%4d", wait); 
+//	 	System.out.println(" units."); 
 	 	return wait; 
 	 } 
 	 
 	 public void refuseLanding() { // Prints a message; This arriving plane
-		 System.out.print(" Plane "); // did not find a place in the queue
-		 System.out.printf("%4d", id); // and it is being directed to another airport
-		 System.out.println(" was directed to another airport."); 
+//		 System.out.print(" Plane "); // did not find a place in the queue
+//		 System.out.printf("%4d", id); // and it is being directed to another airport
+//		 System.out.println(" was directed to another airport."); 
 	 } 
 	 
 	 public void refuseTakeoff() { // Prints a message; This departing plane
-		 System.out.print(" Plane "); // did not find a place in the queue
-		 System.out.printf("%4d", id); // and is being postponed.
-		 System.out.println(" was told to try later."); 
+//		 System.out.print(" Plane "); // did not find a place in the queue
+//		 System.out.printf("%4d", id); // and is being postponed.
+//		 System.out.println(" was told to try later."); 
 	 } 
 	 
 }
